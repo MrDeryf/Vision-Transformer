@@ -1,10 +1,12 @@
 import torch
+import wandb
 from torch import nn
 from torch.utils.data import DataLoader
-import wandb
 
 
-def train_loop(dataloader: DataLoader, model: nn.Module, loss_fn, optimizer, device: str):
+def train_loop(
+    dataloader: DataLoader, model: nn.Module, loss_fn, optimizer, device: str
+):
     size = len(dataloader.dataset)
     num_batches = len(dataloader)
     # Set the model to training mode - important for batch normalization and dropout layers
@@ -28,8 +30,8 @@ def train_loop(dataloader: DataLoader, model: nn.Module, loss_fn, optimizer, dev
         if batch % 10 == 0:
             loss, current = loss.item(), batch * dataloader.batch_size + len(X)
             print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
-    
-    wandb.log({"train_loss": train_loss/num_batches})
+
+    wandb.log({"train_loss": train_loss / num_batches})
 
 
 def test_loop(dataloader: DataLoader, model, loss_fn, device):
@@ -55,4 +57,6 @@ def test_loop(dataloader: DataLoader, model, loss_fn, device):
 
     wandb.log({"val_loss": test_loss, "val_accuracy": correct})
 
-    print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+    print(
+        f"Test Error: \n Accuracy: {(100 * correct):>0.1f}%, Avg loss: {test_loss:>8f} \n"
+    )
