@@ -1,0 +1,13 @@
+import torch
+
+IMG_SIZE = 225
+PATCH_SIZE = 15
+BATCH_SIZE = 64
+NUM_OF_CLASSES = 101
+DROP_RATE = 0.3
+NUM_OF_HEADS = 4
+LEARNING_RATE = 1e-2
+LOSS_FN = torch.nn.CrossEntropyLoss
+OPRIMIZER = torch.optim.SGD
+MOMENTUM = 0.8
+EPOCHS = 30
