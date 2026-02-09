@@ -9,13 +9,13 @@ Based on the original paper:
 
 ## 📊 Results
 
-Trained on **Caltech101** (9,146 images, 101 object categories + background/clutter category) for 30 epochs with SGD optimizer
+Trained on **Caltech101** (9,146 images, 101 object categories) for 30 epochs with SGD optimizer
 
 | Metric                | Value                 |
 |-----------------------|-----------------------|
 | Validation Accuracy   | 44.8%                 |
 | Validation Loss       | 2.99                  |
-| Training Time         | ~45 min (Google Colab)|
+| Training Time         | ~40 min (Google Colab)|
 | Parameters            | 86M                   |
 
 ![Training curves](assets/training_curves.png)
@@ -38,7 +38,7 @@ Key components implemented from scratch:
 ```text
 VIT_project/
 ├── __init__.py          # Entry point (run via python -m VIT_project)
-├── data.py              # Caltech101 loading, normalization, and augmentations
+├── data.py              # Caltech101 loading, normalization, train/test split
 ├── model.py             # Full ViT implementation
 ├── training.py          # Training/validation loops with wandb logging
 └── config.py            # Hyperparameters (lr, batch_size, patch_size, etc.)
