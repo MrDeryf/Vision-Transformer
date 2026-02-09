@@ -1,10 +1,10 @@
 import torch
 import wandb
-from data import get_data
-from model import ViT
+from .model import ViT
+from .data import get_data
 from torch.utils.data import DataLoader
-from training import test_loop, train_loop
-from config import ViTConfig
+from .training import test_loop, train_loop
+from .config import ViTConfig
 
 wandb.login()
 
@@ -19,7 +19,7 @@ batch_size = config.batch_size
 train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False)
 
-device = ("cuda" if torch.cuda.is_available() else "cpu")
+device = "cuda" if torch.cuda.is_available() else "cpu"
 vit_model = ViT(
     img_size=img_size,
     patch_size=patch_size,
@@ -30,9 +30,11 @@ vit_model = ViT(
 vit_model.to(device)
 
 loss_fn = config.loss_fn()
-optimizer = config.OPTIMIZER(vit_model.parameters(),
-                             lr=config.learning_rate,
-                             momentum=config.momentum)
+optimizer = config.OPTIMIZER(
+    vit_model.parameters(),
+    lr=config.learning_rate,
+    momentum=config.momentum if config.optimizer == torch.optim.SGD else None,
+)
 
 wandb.init(
     # Set the project where this run will be logged
